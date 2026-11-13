@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Don Humberto - Materiales para la Construcción</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .bg-corporate { background-color: #0b2545; }
+        .text-corporate { color: #0b2545; }
+        .btn-corporate { background-color: #0b2545; transition: all 0.2s; }
+        .btn-corporate:hover { background-color: #133a6b; }
+        .fade-in { animation: fadeIn 0.25s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col justify-between text-gray-800">
+
+    <!-- ========================================== -->
+    <!-- 1. VISTA DE INICIO DE SESIÓN (LOGIN)       -->
+    <!-- ========================================== -->
+    <div id="login-view" class="flex-grow flex items-center justify-center">
+        <div class="w-full max-w-5xl bg-white rounded-2xl shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-2 m-4">
+            
+            <!-- Columna Izquierda: Identidad Corporativa -->
+            <div class="bg-corporate text-white p-10 lg:p-14 flex flex-col justify-between relative overflow-hidden">
+                <div class="absolute -right-16 -bottom-16 w-64 h-64 rounded-full bg-blue-900 opacity-30 pointer-events-none"></div>
+                <div class="absolute -left-10 top-20 w-40 h-40 rounded-full bg-blue-800 opacity-20 pointer-events-none"></div>
+                
+                <div>
+                    <div class="flex items-center space-x-3 mb-8">
+                        <div class="w-12 h-12 bg-white text-corporate rounded-xl flex items-center justify-center text-2xl font-bold shadow-lg">
+                            <i class="fa-solid fa-house-chimney"></i>
+                        </div>
+                        <span class="text-xl font-bold tracking-wider">DON HUMBERTO</span>
+                    </div>
+                    
+                    <h1 class="text-3xl lg:text-4xl font-extrabold mb-4 leading-tight">
+                        Materiales para la Construcción
+                    </h1>
+                    <p class="text-blue-200 text-base leading-relaxed">
+                        Sistema de Gestión Integral de Información. Control de stock, ventas, clientes y operaciones centralizadas en tiempo real.
+                    </p>
+                </div>
+
+                <div class="mt-12 pt-6 border-t border-blue-900/50 text-xs text-blue-300">
+                    <p>© 2026 Don Humberto S.A. Todos los derechos reservados.</p>
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Formulario de Login -->
+            <div class="p-8 lg:p-12 flex flex-col justify-center bg-white">
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800">Iniciar Sesión</h2>
+                    <p class="text-sm text-gray-500 mt-1">Ingresa tus credenciales para acceder al sistema.</p>
+                </div>
+
+                <!-- Alerta dinámica de error/estado -->
+                <div id="login-alert" class="hidden mb-6 p-4 rounded-lg text-sm font-medium"></div>
+
+                <form id="login-form" class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Usuario o Legajo</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
+                                <i class="fa-solid fa-user"></i>
+                            </span>
+                            <input type="text" id="username" required
+                                class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none transition"
+                                placeholder="Ej. admin, EMP001 o tu nombre">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+                            <input type="password" id="password" required
+                                class="w-full pl-10 pr-12 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none transition"
+                                placeholder="••••••••">
+                            <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-400 hover:text-gray-600">
+                                <i class="fa-solid fa-eye" id="eye-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between text-sm">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" id="remember" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                            <span class="text-gray-600">Recordarme</span>
+                        </label>
+                        <a href="#" onclick="showToast('Contacta al administrador del sistema para blanquear tu clave.'); return false;" class="text-blue-600 hover:underline font-medium">¿Olvidaste tu contraseña?</a>
+                    </div>
+
+                    <button type="submit" class="w-full btn-corporate text-white font-semibold py-3 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-200">
+                        Ingresar
+                    </button>
+                </form>
+
+                <!-- Ayuda rápida para pruebas -->
+                <div class="mt-8 p-3.5 bg-blue-50 border border-blue-100 rounded-lg text-xs text-blue-800">
+                    <p class="font-semibold mb-1.5"><i class="fa-solid fa-circle-info mr-1"></i> Credenciales configuradas:</p>
+                    <ul class="list-disc list-inside space-y-1 text-blue-700">
+                        <li><strong>Admin:</strong> <code class="bg-blue-100 px-1 rounded">admin</code> (pass: <code class="bg-blue-100 px-1 rounded">123</code>), <code class="bg-blue-100 px-1 rounded">jlopez</code> (pass: <code class="bg-blue-100 px-1 rounded">admin2026</code>), <code class="bg-blue-100 px-1 rounded">mlopez</code> / <code class="bg-blue-100 px-1 rounded">cgomez</code> (pass: <code class="bg-blue-100 px-1 rounded">1234</code>)</li>
+                        <li><strong>Empleado:</strong> <code class="bg-blue-100 px-1 rounded">EMP001</code> (pass: <code class="bg-blue-100 px-1 rounded">emp123</code>), <code class="bg-blue-100 px-1 rounded">juanperez</code> / <code class="bg-blue-100 px-1 rounded">marialopez</code> (pass: <code class="bg-blue-100 px-1 rounded">ventas123</code>)</li>
+                        <li><strong>Cliente:</strong> Cualquier otro usuario y contraseña (ej: <code class="bg-blue-100 px-1 rounded">cliente1</code> / <code class="bg-blue-100 px-1 rounded">hola</code>)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- 2. VISTA: DASHBOARD PRINCIPAL (ADMIN)      -->
+    <!-- ========================================== -->
+    <div id="admin-dashboard" class="hidden min-h-screen flex flex-col md:flex-row">
+        
+        <!-- Sidebar Administrador -->
+        <aside class="bg-corporate text-white w-full md:w-64 flex-shrink-0 flex flex-col justify-between md:min-h-screen shadow-xl">
+            <div>
+                <div class="p-6 border-b border-blue-900/50 flex justify-between items-center">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-white text-corporate rounded-xl flex items-center justify-center text-xl font-bold shadow">
+                            <i class="fa-solid fa-house-chimney"></i>
+                        </div>
+                        <div>
+                            <h2 class="font-bold text-base tracking-wide leading-tight">DON HUMBERTO</h2>
+                            <span class="text-xs text-blue-300">Materiales Obras</span>
+                        </div>
+                    </div>
+                    <button onclick="toggleMobileSidebar('admin-sidebar-menu')" class="md:hidden text-white hover:text-blue-200 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Menú de Navegación Admin -->
+                <nav id="admin-sidebar-menu" class="hidden md:block p-4 space-y-1.5 text-sm font-medium">
+                    <button onclick="switchAdminSection('dashboard', this)" class="admin-nav-btn w-full flex items-center space-x-3 bg-blue-900/70 text-white px-4 py-3 rounded-lg shadow-sm transition text-left">
+                        <i class="fa-solid fa-chart-pie w-5 text-center text-blue-300"></i>
+                        <span>Dashboard</span>
+                    </button>
+                    <button onclick="switchAdminSection('stock', this)" class="admin-nav-btn w-full flex items-center space-x-3 text-blue-200 hover:bg-blue-900/40 hover:text-white px-4 py-3 rounded-lg transition text-left">
+                        <i class="fa-solid fa-boxes-stacked w-5 text-center text-blue-300"></i>
+                        <span>Stock</span>
+                    </button>
+                    <button onclick="switchAdminSection('ventas', this)" class="admin-nav-btn w-full flex items-center space-x-3 text-blue-200 hover:bg-blue-900/40 hover:text-white px-4 py-3 rounded-lg transition text-left">
+                        <i class="fa-solid fa-cart-shopping w-5 text-center text-blue-300"></i>
+                        <span>Ventas</span>
+                    </button>
+                    <button onclick="switchAdminSection('personal', this)" class="admin-nav-btn w-full flex items-center space-x-3 text-blue-200 hover:bg-blue-900/40 hover:text-white px-4 py-3 rounded-lg transition text-left">
+                        <i class="fa-solid fa-users-gear w-5 text-center text-blue-300"></i>
+                        <span>Personal</span>
+                    </button>
+                    <button onclick="switchAdminSection('logistica', this)" class="admin-nav-btn w-full flex items-center space-x-3 text-blue-200 hover:bg-blue-900/40 hover:text-white px-4 py-3 rounded-lg transition text-left">
+                        <i class="fa-solid fa-truck-fast w-5 text-center text-blue-300"></i>
+                        <span>Logística</span>
+                    </button>
+                    <button onclick="switchAdminSection('proveedores', this)" class="admin-nav-btn w-full flex items-center space-x-3 text-blue-200 hover:bg-blue-900/40 hover:text-white px-4 py-3 rounded-lg transition text-left">
+                        <i class="fa-solid fa-handshake w-5 text-center text-blue-300"></i>
+                        <span>Proveedores</span>
+                    </button>
+                    <button onclick="switchAdminSection('reportes', this)" class="admin-nav-btn w-full flex items-center space-x-3 text-blue-200 hover:bg-blue-900/40 hover:text-white px-4 py-3 rounded-lg transition text-left">
+                        <i class="fa-solid fa-file-lines w-5 text-center text-blue-300"></i>
+                        <span>Reportes</span>
+                    </button>
+                    <button onclick="switchAdminSection('configuracion', this)" class="admin-nav-btn w-full flex items-center space-x-3 text-blue-200 hover:bg-blue-900/40 hover:text-white px-4 py-3 rounded-lg transition text-left">
+                        <i class="fa-solid fa-gear w-5 text-center text-blue-300"></i>
+                        <span>Configuración</span>
+                    </button>
+                </nav>
+            </div>
+
+            <div class="p-4 border-t border-blue-900/50">
+                <button onclick="logout()" class="w-full flex items-center justify-center space-x-2 bg-red-600 hover:bg-red-700 text-white font-medium px-4 py-2.5 rounded-lg transition shadow">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Contenido Principal Administrador -->
+        <div class="flex-grow flex flex-col min-w-0">
+            <header class="bg-white border-b border-gray-200 shadow-sm px-6 py-4 flex justify-between items-center">
+                <h1 id="admin-page-title" class="text-xl font-bold text-gray-800">Panel Administrador</h1>
+                <div class="flex items-center space-x-3">
+                    <span id="admin-user-badge" class="text-sm font-semibold bg-blue-100 text-blue-800 px-3 py-1.5 rounded-lg border border-blue-200">
+                        Admin
+                    </span>
+                </div>
+            </header>
+
+            <main id="admin-main-content" class="p-6 lg:p-8 flex-grow w-full fade-in">
+                <!-- Se carga dinámicamente por JS -->
+            </main>
+        </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- 3. VISTA: PANEL DE EMPLEADO                -->
+    <!-- ========================================== -->
+    <div id="employee-dashboard" class="hidden min-h-screen flex flex-col md:flex-row">
+        
+        <!-- Sidebar Empleado -->
+        <aside class="bg-corporate text-white w-full md:w-64 flex-shrink-0 flex flex-col justify-between md:min-h-screen shadow-xl">
+            <div>
+                <div class="p-6 border-b border-blue-900/50 flex justify-between items-center">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-white text-corporate rounded-xl flex items-center justify-center text-xl font-bold shadow">
+                            <i class="fa-solid fa-house-chimney"></i>
+                        </div>
+                        <div>
+                            <h2 class="font-bold text-base tracking-wide leading-tight">DON HUMBERTO</h2>
+                            <span class="text-xs text-blue-300">Panel Empleado</span>
+                        </div>
+                    </div>
+                    <button onclick="toggleMobileSidebar('employee-sidebar-menu')" class="md:hidden text-white hover:text-blue-200 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Menú de Navegación Empleado -->
+                <nav id="employee-sidebar-menu" class="hidden md:block p-4 space-y-1.5 text-sm font-medium">
+                    <button onclick="switchEmployeeSection('dashboard', this)" class="emp-nav-btn w-full flex items-center space-x-3 bg-blue-900/70 text-white px-4 py-3 rounded-lg shadow-sm transition text-left">
+                        <i class="fa-solid fa-chart-pie w-5 text-center text-blue-300"></i>
+                        <span>Dashboard</span>
+                    </button>
+                    <button onclick="switchEmployeeSection('stock', this)" class="emp-nav-btn w-full flex items-center space-x-3 text-blue-200 hover:bg-blue-900/40 hover:text-white px-4 py-3 rounded-lg transition text-left">
+                        <i class="fa-solid fa-boxes-stacked w-5 text-center text-blue-300"></i>
+                        <span>Consultar Stock</span>
+                    </button>
+                    <button onclick="switchEmployeeSection('ventas', this)" class="emp-nav-btn w-full flex items-center space-x-3 text-blue-200 hover:bg-blue-900/40 hover:text-white px-4 py-3 rounded-lg transition text-left">
+                        <i class="fa-solid fa-cart-shopping w-5 text-center text-blue-300"></i>
+                        <span>Ventas y Pedidos</span>
+                    </button>
+                    <button onclick="switchEmployeeSection('logistica', this)" class="emp-nav-btn w-full flex items-center space-x-3 text-blue-200 hover:bg-blue-900/40 hover:text-white px-4 py-3 rounded-lg transition text-left">
+                        <i class="fa-solid fa-truck-fast w-5 text-center text-blue-300"></i>
+                        <span>Despachos y Retiros</span>
+                    </button>
+                </nav>
+            </div>
+
+            <div class="p-4 border-t border-blue-900/50">
+                <button onclick="logout()" class="w-full flex items-center justify-center space-x-2 bg-red-600 hover:bg-red-700 text-white font-medium px-4 py-2.5 rounded-lg transition shadow">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Contenido Principal Empleado -->
+        <div class="flex-grow flex flex-col min-w-0">
+            <header class="bg-white border-b border-gray-200 shadow-sm px-6 py-4 flex justify-between items-center">
+                <h1 id="emp-page-title" class="text-xl font-bold text-gray-800">Panel de Operaciones</h1>
+                <div class="flex items-center space-x-3">
+                    <span id="employee-user-badge" class="text-sm font-semibold bg-blue-100 text-blue-800 px-3 py-1.5 rounded-lg border border-blue-200">
+                        Legajo: EMP001
+                    </span>
+                </div>
+            </header>
+
+            <main id="employee-main-content" class="p-6 lg:p-8 flex-grow w-full fade-in">
+                <!-- Se carga dinámicamente por JS -->
+            </main>
+        </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- 4. VISTA: PORTAL CLIENTE (RENOVADO)        -->
+    <!-- ========================================== -->
+    <div id="client-dashboard" class="hidden min-h-screen flex flex-col bg-slate-50">
+        <!-- Navbar Cliente -->
+        <header class="bg-corporate text-white shadow-lg sticky top-0 z-30">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-amber-400 text-corporate rounded-xl flex items-center justify-center font-extrabold text-lg shadow">
+                        <i class="fa-solid fa-house-chimney"></i>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-lg tracking-wide block leading-none">DON HUMBERTO</span>
+                        <span class="text-xs text-blue-200">Corralón y Materiales de Obra</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3 sm:space-x-4">
+                    <span id="client-user-badge" class="hidden sm:inline-block text-sm bg-blue-900/80 border border-blue-700 px-3.5 py-1.5 rounded-lg font-medium">Cliente</span>
+                    <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition shadow flex items-center">
+                        <i class="fa-solid fa-right-from-bracket sm:mr-1.5"></i>
+                        <span class="hidden sm:inline">Salir</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex-grow w-full">
+            <!-- Hero Banner con Imagen de Fondo -->
+            <div class="relative rounded-3xl overflow-hidden shadow-xl mb-10 bg-corporate">
+                <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=80" 
+                     alt="Construcción y Materiales" 
+                     class="absolute inset-0 w-full h-full object-cover opacity-35 mix-blend-luminosity">
+                <div class="absolute inset-0 bg-gradient-to-r from-[#0b2545] via-[#0b2545]/90 to-transparent"></div>
+                
+                <div class="relative z-10 p-8 sm:p-12 lg:p-16 max-w-2xl text-white">
+                    <span class="bg-amber-400 text-corporate text-xs font-extrabold uppercase tracking-wider px-3.5 py-1.5 rounded-full inline-block mb-4 shadow">
+                        <i class="fa-solid fa-helmet-safety mr-1"></i> Catálogo Oficial 2026
+                    </span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold mb-4 leading-tight">
+                        Construí con los mejores materiales del mercado
+                    </h2>
+                    <p class="text-blue-100 text-base sm:text-lg mb-8 leading-relaxed">
+                        Explorá nuestro stock actualizado en tiempo real, compará precios por unidad o por cantidad y consultá disponibilidad inmediata en sucursal.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <a href="#catalogo-section" class="bg-amber-400 hover:bg-amber-300 text-corporate font-bold px-6 py-3.5 rounded-xl shadow-lg transition flex items-center">
+                            <span>Explorar Materiales</span>
+                            <i class="fa-solid fa-arrow-down ml-2"></i>
+                        </a>
+                        <button onclick="openContactModal()" class="bg-white/15 hover:bg-white/25 backdrop-blur-sm text-white border border-white/30 font-semibold px-6 py-3.5 rounded-xl transition">
+                            <i class="fa-solid fa-phone mr-2"></i> Asesoramiento en Obra
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Beneficios Rápidos -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 text-corporate flex items-center justify-center text-xl flex-shrink-0">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 text-sm">Envíos Directos a Obra</h4>
+                        <p class="text-xs text-gray-500 mt-0.5">Flota propia con descarga en el día.</p>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl flex-shrink-0">
+                        <i class="fa-solid fa-medal"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 text-sm">Primeras Marcas Certificadas</h4>
+                        <p class="text-xs text-gray-500 mt-0.5">Avellaneda, Acindar, Loma Negra y más.</p>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl flex-shrink-0">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 text-sm">Acopio de Materiales</h4>
+                        <p class="text-xs text-gray-500 mt-0.5">Congelá el precio y retirá cuando avances.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buscador y Filtros por Categoría -->
+            <div id="catalogo-section" class="scroll-mt-24">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h3 class="text-2xl font-extrabold text-gray-900">Catálogo de Materiales</h3>
+                        <p class="text-sm text-gray-500">Filtrá por rubro o buscá el producto que necesitás para tu obra.</p>
+                    </div>
+                    
+                    <!-- Buscador -->
+                    <div class="relative w-full md:w-80">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+                        <input type="text" id="client-search-input" onkeyup="renderClientCatalog()"
+                            placeholder="Buscar cemento, hierro, ladrillos..." 
+                            class="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none shadow-sm">
+                    </div>
+                </div>
+
+                <!-- Botones de Categoría -->
+                <div class="flex flex-wrap gap-2 mb-8" id="category-filters">
+                    <button onclick="setClientCategory('Todos', this)" class="cat-btn bg-corporate text-white px-4 py-2 rounded-full text-xs font-bold shadow-sm transition">Todos</button>
+                    <button onclick="setClientCategory('Obra Gruesa', this)" class="cat-btn bg-white text-gray-700 hover:bg-gray-100 border border-gray-200 px-4 py-2 rounded-full text-xs font-semibold transition">Obra Gruesa</button>
+                    <button onclick="setClientCategory('Hierros', this)" class="cat-btn bg-white text-gray-700 hover:bg-gray-100 border border-gray-200 px-4 py-2 rounded-full text-xs font-semibold transition">Hierros y Mallas</button>
+                    <button onclick="setClientCategory('Áridos', this)" class="cat-btn bg-white text-gray-700 hover:bg-gray-100 border border-gray-200 px-4 py-2 rounded-full text-xs font-semibold transition">Áridos</button>
+                    <button onclick="setClientCategory('Terminaciones', this)" class="cat-btn bg-white text-gray-700 hover:bg-gray-100 border border-gray-200 px-4 py-2 rounded-full text-xs font-semibold transition">Terminaciones</button>
+                </div>
+
+                <!-- Grilla de Productos con Imágenes -->
+                <div id="client-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
+                    <!-- Se renderiza dinámicamente desde el inventario -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer General -->
+    <footer class="bg-white border-t border-gray-200 py-4 text-center text-xs text-gray-500">
+        <p>Sistema Don Humberto v3.0 • Gestión Integral de Materiales para la Construcción</p>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- MODAL DINÁMICO REUTILIZABLE                -->
+    <!-- ========================================== -->
+    <div id="app-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden fade-in">
+            <div class="bg-corporate text-white px-6 py-4 flex justify-between items-center">
+                <h3 id="modal-title" class="font-bold text-lg">Título</h3>
+                <button onclick="closeModal()" class="text-blue-200 hover:text-white text-xl leading-none">&times;</button>
+            </div>
+            <div id="modal-body" class="p-6">
+                <!-- Contenido dinámico -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notificación Toast Flotante -->
+    <div id="toast-notification" class="hidden fixed bottom-5 right-5 bg-gray-900 text-white px-5 py-3.5 rounded-xl shadow-2xl z-50 flex items-center space-x-3 text-sm font-medium fade-in">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="toast-message">Acción realizada</span>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 5. SCRIPT DE JAVASCRIPT                    -->
+    <!-- ========================================== -->
+    <script>
+        // ==========================================
+        // A. BASE DE DATOS EN MEMORIA (ESTADO)
+        // ==========================================
+        
+        // Usuarios y contraseñas determinados (Conservando tus usuarios originales)
+        const adminCredentials = {
+            'admin': '123',
+            'jlopez': 'admin2026',
+            'mlopez': '1234',
+            'cgomez': '1234'
+        };
+
+        const employeeCredentials = {
+            'emp001': 'emp123',
+            'juanperez': 'ventas123',
+            'marialopez': 'ventas123',
+            'empleado': '123'
+        };
+
+        // Inventario de Productos (Compartido entre Admin, Empleado y Catálogo Cliente)
+        let products = [
+            {
+                id: 'MAT-01',
+                name: 'Cemento Avellaneda (50 kg)',
+                category: 'Obra Gruesa',
+                price: 8950,
+                unit: 'bolsa',
+                stock: 340,
+                minStock: 100,
+                description: 'Cemento portland normado de alta resistencia inicial para estructuras y albañilería.',
+                image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                id: 'MAT-02',
+                name: 'Hierro Acindar Ø 12 mm (12m)',
+                category: 'Hierros',
+                price: 12400,
+                unit: 'barra',
+                stock: 85,
+                minStock: 100,
+                description: 'Barra de acero conformado ADN 420 ideal para columnas, vigas y losas.',
+                image: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                id: 'MAT-03',
+                name: 'Arena Fina Lavada (m³)',
+                category: 'Áridos',
+                price: 24500,
+                unit: 'm³',
+                stock: 42,
+                minStock: 15,
+                description: 'Arena seleccionada libre de impurezas para revoques finos y terminaciones prolijas.',
+                image: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                id: 'MAT-04',
+                name: 'Ladrillo Hueco 12x18x33 (Pallet x144)',
+                category: 'Obra Gruesa',
+                price: 68900,
+                unit: 'pallet',
+                stock: 18,
+                minStock: 20,
+                description: 'Ladrillo cerámico portante de 6 tubos con excelente aislación térmica y acústica.',
+                image: 'https://images.unsplash.com/photo-1590075865003-e48277faa558?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                id: 'MAT-05',
+                name: 'Piedra Partida 6-20 (m³)',
+                category: 'Áridos',
+                price: 31200,
+                unit: 'm³',
+                stock: 29,
+                minStock: 10,
+                description: 'Agregado grueso triturado de alta dureza para elaboración de hormigones estructurales.',
+                image: 'https://images.unsplash.com/photo-1525857597365-5f6dbff2e36e?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                id: 'MAT-06',
+                name: 'Porcelanato Satinado Gris 60x60',
+                category: 'Terminaciones',
+                price: 19800,
+                unit: 'm²',
+                stock: 115,
+                minStock: 40,
+                description: 'Revestimiento rectificado de alto tránsito resistente a manchas y rayaduras.',
+                image: 'https://images.unsplash.com/photo-1615873968403-89e068629265?auto=format&fit=crop&w=800&q=80'
+            }
+        ];
+
+        // Lista de Pedidos / Ventas
+        let orders = [
+            { id: '#PED-9821', client: 'Construcciones S.R.L.', items: 'Cemento x50 bolsas, Hierro del 12 x20', total: 695500, status: 'En Preparación', date: 'Hoy, 09:15' },
+            { id: '#PED-9820', client: 'Pérez Juan (Particular)', items: 'Arena fina x2 m³, Ladrillos huecos x2 pallets', total: 186800, status: 'Listo para Retiro', date: 'Hoy, 08:40' },
+            { id: '#PED-9819', client: 'Arq. Sofía Martínez', items: 'Porcelanato Gris x35 m²', total: 693000, status: 'Entregado', date: 'Ayer, 17:20' }
+        ];
+
+        // Personal
+        const staffList = [
+            { legajo: 'ADM-01', name: 'Javier López (jlopez)', role: 'Administrador General', shift: 'Completo', status: 'Activo' },
+            { legajo: 'EMP001', name: 'Carlos Gómez', role: 'Vendedor Mostrador', shift: 'Mañana (08-16hs)', status: 'Activo' },
+            { legajo: 'EMP002', name: 'María López (marialopez)', role: 'Facturación y Caja', shift: 'Mañana (08-16hs)', status: 'Activo' },
+            { legajo: 'EMP003', name: 'Juan Pérez (juanperez)', role: 'Encargado de Depósito', shift: 'Tarde (12-20hs)', status: 'En Ruta' }
+        ];
+
+        let currentClientCategory = 'Todos';
+
+        // ==========================================
+        // B. LÓGICA DE LOGIN Y ROLES
+        // ==========================================
+        const togglePasswordBtn = document.getElementById('toggle-password');
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = document.getElementById('eye-icon');
+
+        togglePasswordBtn.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            eyeIcon.classList.toggle('fa-eye');
+            eyeIcon.classList.toggle('fa-eye-slash');
+        });
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const usernameRaw = document.getElementById('username').value.trim();
+            const username = usernameRaw.toLowerCase();
+            const password = passwordInput.value.trim();
+
+            if (!username || !password) {
+                showAlert('Por favor, ingresa tu usuario y contraseña.', 'error');
+                return;
+            }
+
+            // 1. Verificar si es Administrador
+            if (username in adminCredentials) {
+                if (adminCredentials[username] === password) {
+                    showNotificationAndRedirect(
+                        `¡Bienvenido, Administrador (${usernameRaw})! Accediendo al Dashboard...`,
+                        'admin-dashboard',
+                        'admin-user-badge',
+                        `Admin: ${usernameRaw}`
+                    );
+                    renderAdminSection('dashboard');
+                } else {
+                    showAlert('Contraseña incorrecta para el usuario Administrador.', 'error');
+                }
+            } 
+            // 2. Verificar si es Empleado
+            else if (username in employeeCredentials) {
+                if (employeeCredentials[username] === password) {
+                    showNotificationAndRedirect(
+                        `¡Bienvenido, ${usernameRaw}! Cargando panel de operaciones...`,
+                        'employee-dashboard',
+                        'employee-user-badge',
+                        `Operador: ${usernameRaw.toUpperCase()}`
+                    );
+                    renderEmployeeSection('dashboard');
+                } else {
+                    showAlert('Contraseña incorrecta para el usuario Empleado.', 'error');
+                }
+            } 
+            // 3. Cualquier otro usuario y contraseña ingresa como Cliente
+            else {
+                showNotificationAndRedirect(
+                    `¡Bienvenido, ${usernameRaw}! Ingresando al catálogo de Don Humberto...`,
+                    'client-dashboard',
+                    'client-user-badge',
+                    `Hola, ${usernameRaw}`
+                );
+                renderClientCatalog();
+            }
+        });
+
+        function showAlert(message, type) {
+            const alertBox = document.getElementById('login-alert');
+            alertBox.textContent = message;
+            alertBox.className = 'mb-6 p-4 rounded-lg text-sm font-medium border ' + 
+                (type === 'error' ? 'bg-red-50 text-red-700 border-red-200' : 'bg-green-50 text-green-700 border-green-200');
+            alertBox.classList.remove('hidden');
+        }
+
+        function showNotificationAndRedirect(welcomeMessage, targetDashboardId, badgeId, badgeText) {
+            showAlert(welcomeMessage, 'success');
+            document.getElementById(badgeId).textContent = badgeText;
+
+            setTimeout(() => {
+                document.getElementById('login-view').classList.add('hidden');
+                document.getElementById(targetDashboardId).classList.remove('hidden');
+                document.getElementById('login-form').reset();
+                document.getElementById('login-alert').classList.add('hidden');
+            }, 700);
+        }
+
+        function logout() {
+            document.getElementById('admin-dashboard').classList.add('hidden');
+            document.getElementById('employee-dashboard').classList.add('hidden');
+            document.getElementById('client-dashboard').classList.add('hidden');
+            document.getElementById('login-view').classList.remove('hidden');
+            showToast('Sesión cerrada correctamente.');
+        }
+
+        function toggleMobileSidebar(menuId) {
+            document.getElementById(menuId).classList.toggle('hidden');
+        }
+
+        // ==========================================
+        // C. NAVEGACIÓN Y VISTAS DEL ADMINISTRADOR
+        // ==========================================
+        function switchAdminSection(section, btnElement) {
+            // Actualizar estilos del botón activo
+            document.querySelectorAll('.admin-nav-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-900/70', 'text-white', 'shadow-sm');
+                btn.classList.add('text-blue-200');
+            });
+            if (btnElement) {
+                btnElement.classList.add('bg-blue-900/70', 'text-white', 'shadow-sm');
+                btnElement.classList.remove('text-blue-200');
+            }
+            // Cerrar menú en móvil tras hacer clic
+            if (window.innerWidth < 768) {
+                document.getElementById('admin-sidebar-menu').classList.add('hidden');
+            }
+            renderAdminSection(section);
+        }
+
+        function renderAdminSection(section) {
+            const container = document.getElementById('admin-main-content');
+            const title = document.getElementById('admin-page-title');
+            const criticalItems = products.filter(p => p.stock < p.minStock).length;
+
+            if (section === 'dashboard') {
+                title.textContent = 'Panel Administrador';
+                container.innerHTML = `
+                    <div class="mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                        <h2 class="text-2xl font-bold text-gray-800">Resumen General de Gestión</h2>
+                        <span class="text-sm text-gray-500"><i class="fa-regular fa-clock mr-1"></i>Actualizado en tiempo real</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-medium text-gray-500">Ventas Totales (Mes)</span>
+                                <i class="fa-solid fa-wallet text-blue-600 text-lg"></i>
+                            </div>
+                            <p class="text-3xl font-bold text-gray-900">$14.850.200</p>
+                            <span class="text-xs text-green-600 font-semibold mt-1 inline-block"><i class="fa-solid fa-arrow-trend-up mr-1"></i>+12.4% vs mes anterior</span>
+                        </div>
+                        <div onclick="switchAdminSection('stock', document.querySelectorAll('.admin-nav-btn')[1])" class="cursor-pointer bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:border-amber-400 transition">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-medium text-gray-500">Stock Crítico</span>
+                                <i class="fa-solid fa-triangle-exclamation text-amber-500 text-lg"></i>
+                            </div>
+                            <p class="text-3xl font-bold text-gray-900">${criticalItems} ítems</p>
+                            <span class="text-xs text-amber-600 font-semibold mt-1 inline-block">Clic para revisar stock →</span>
+                        </div>
+                        <div onclick="switchAdminSection('ventas', document.querySelectorAll('.admin-nav-btn')[2])" class="cursor-pointer bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:border-indigo-400 transition">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-medium text-gray-500">Pedidos Registrados</span>
+                                <i class="fa-solid fa-truck-ramp-box text-indigo-600 text-lg"></i>
+                            </div>
+                            <p class="text-3xl font-bold text-gray-900">${orders.length}</p>
+                            <span class="text-xs text-blue-600 font-semibold mt-1 inline-block">Ver listado de pedidos →</span>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-medium text-gray-500">Clientes Registrados</span>
+                                <i class="fa-solid fa-users text-emerald-600 text-lg"></i>
+                            </div>
+                            <p class="text-3xl font-bold text-gray-900">1,420</p>
+                            <span class="text-xs text-emerald-600 font-semibold mt-1 inline-block">+45 nuevos este mes</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 lg:col-span-2">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4">Ventas por Rubro (Trimestre Actual)</h3>
+                            <div class="space-y-4 mt-4">
+                                <div>
+                                    <div class="flex justify-between text-sm font-medium mb-1"><span>Cemento y Obra Gruesa</span><span>54% ($8.019.000)</span></div>
+                                    <div class="w-full bg-gray-100 rounded-full h-3"><div class="bg-corporate h-3 rounded-full" style="width: 54%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm font-medium mb-1"><span>Hierros y Estructuras</span><span>28% ($4.158.000)</span></div>
+                                    <div class="w-full bg-gray-100 rounded-full h-3"><div class="bg-blue-600 h-3 rounded-full" style="width: 28%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm font-medium mb-1"><span>Áridos y Terminaciones</span><span>18% ($2.673.200)</span></div>
+                                    <div class="w-full bg-gray-100 rounded-full h-3"><div class="bg-amber-500 h-3 rounded-full" style="width: 18%"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4">Accesos Rápidos Admin</h3>
+                            <div class="space-y-3">
+                                <button onclick="switchAdminSection('stock', document.querySelectorAll('.admin-nav-btn')[1])" class="w-full text-left px-4 py-3 bg-gray-50 hover:bg-blue-50 rounded-lg text-sm font-medium text-gray-700 flex justify-between items-center transition">
+                                    <span><i class="fa-solid fa-boxes-stacked mr-2 text-blue-600"></i> Control de Stock</span>
+                                    <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+                                </button>
+                                <button onclick="openNewProductModal()" class="w-full text-left px-4 py-3 bg-gray-50 hover:bg-blue-50 rounded-lg text-sm font-medium text-gray-700 flex justify-between items-center transition">
+                                    <span><i class="fa-solid fa-plus-circle mr-2 text-emerald-600"></i> Agregar Nuevo Material</span>
+                                    <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+                                </button>
+                                <button onclick="switchAdminSection('personal', document.querySelectorAll('.admin-nav-btn')[3])" class="w-full text-left px-4 py-3 bg-gray-50 hover:bg-blue-50 rounded-lg text-sm font-medium text-gray-700 flex justify-between items-center transition">
+                                    <span><i class="fa-solid fa-user-gear mr-2 text-indigo-600"></i> Auditoría de Personal</span>
+                                    <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } 
+            else if (section === 'stock') {
+                title.textContent = 'Control de Inventario y Precios';
+                container.innerHTML = renderStockTableHTML(true);
+            }
+            else if (section === 'ventas') {
+                title.textContent = 'Registro de Ventas y Pedidos';
+                container.innerHTML = renderOrdersTableHTML('admin');
+            }
+            else if (section === 'personal') {
+                title.textContent = 'Gestión de Personal';
+                container.innerHTML = `
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+                            <h3 class="text-lg font-bold text-gray-800">Nómina de Empleados Activos</h3>
+                            <span class="text-xs bg-blue-100 text-blue-800 font-semibold px-3 py-1 rounded-full">${staffList.length} empleados</span>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm text-gray-600">
+                                <thead class="bg-gray-50 uppercase text-xs font-semibold text-gray-700">
+                                    <tr>
+                                        <th class="px-6 py-3">Legajo</th>
+                                        <th class="px-6 py-3">Nombre / Usuario</th>
+                                        <th class="px-6 py-3">Puesto</th>
+                                        <th class="px-6 py-3">Turno</th>
+                                        <th class="px-6 py-3">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    ${staffList.map(s => `
+                                        <tr>
+                                            <td class="px-6 py-4 font-bold text-gray-900">${s.legajo}</td>
+                                            <td class="px-6 py-4">${s.name}</td>
+                                            <td class="px-6 py-4">${s.role}</td>
+                                            <td class="px-6 py-4">${s.shift}</td>
+                                            <td class="px-6 py-4"><span class="bg-green-100 text-green-800 text-xs px-2.5 py-1 rounded-full font-medium">${s.status}</span></td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            }
+            else if (section === 'logistica') {
+                title.textContent = 'Logística y Flota de Reparto';
+                container.innerHTML = `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="font-bold text-lg text-gray-900"><i class="fa-solid fa-truck text-corporate mr-2"></i>Camión Mercedes-Benz Atego</span>
+                                <span class="bg-amber-100 text-amber-800 text-xs font-bold px-2.5 py-1 rounded-full">En Reparto</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-2"><strong>Chofer:</strong> Juan Pérez • <strong>Patente:</strong> AF 492 KL</p>
+                            <p class="text-sm text-gray-500">Destino actual: Obra Barrio Cerrado Los Álamos (Cemento + Hierros).</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="font-bold text-lg text-gray-900"><i class="fa-solid fa-truck-pickup text-corporate mr-2"></i>Camioneta Ford F-100</span>
+                                <span class="bg-green-100 text-green-800 text-xs font-bold px-2.5 py-1 rounded-full">Disponible en Playa</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-2"><strong>Chofer:</strong> Sin asignar • <strong>Patente:</strong> AD 118 RT</p>
+                            <p class="text-sm text-gray-500">Lista para envíos rápidos de hasta 1.500 kg.</p>
+                        </div>
+                    </div>
+                `;
+            }
+            else if (section === 'proveedores') {
+                title.textContent = 'Proveedores Oficiales';
+                container.innerHTML = `
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">Directorio de Proveedores</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="p-4 border border-gray-200 rounded-xl">
+                                <h4 class="font-bold text-corporate">Cementos Avellaneda S.A.</h4>
+                                <p class="text-xs text-gray-500 mt-1">Rubro: Cemento y Cales</p>
+                                <p class="text-sm text-gray-700 mt-3"><i class="fa-solid fa-phone mr-1 text-blue-600"></i> 0800-555-2363</p>
+                            </div>
+                            <div class="p-4 border border-gray-200 rounded-xl">
+                                <h4 class="font-bold text-corporate">Acindar Grupo ArcelorMittal</h4>
+                                <p class="text-xs text-gray-500 mt-1">Rubro: Aceros y Mallas</p>
+                                <p class="text-sm text-gray-700 mt-3"><i class="fa-solid fa-phone mr-1 text-blue-600"></i> 0800-444-4437</p>
+                            </div>
+                            <div class="p-4 border border-gray-200 rounded-xl">
+                                <h4 class="font-bold text-corporate">Canteras del Norte S.R.L.</h4>
+                                <p class="text-xs text-gray-500 mt-1">Rubro: Arena y Piedra Partida</p>
+                                <p class="text-sm text-gray-700 mt-3"><i class="fa-solid fa-phone mr-1 text-blue-600"></i> (0351) 489-2210</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            else if (section === 'reportes') {
+                title.textContent = 'Reportes y Exportación';
+                container.innerHTML = `
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 max-w-2xl">
+                        <h3 class="text-lg font-bold text-gray-800 mb-2">Generación de Informes</h3>
+                        <p class="text-sm text-gray-500 mb-6">Descargá resúmenes operativos del sistema Don Humberto.</p>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Reporte de Inventario Valorizado</h4>
+                                    <p class="text-xs text-gray-500">Incluye stock actual y precios unitarios.</p>
+                                </div>
+                                <button onclick="showToast('Descargando Reporte_Stock_2026.pdf...')" class="btn-corporate text-white text-xs font-semibold px-4 py-2 rounded-lg">
+                                    <i class="fa-solid fa-download mr-1"></i> Descargar
+                                </button>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Cierre de Caja y Pedidos del Día</h4>
+                                    <p class="text-xs text-gray-500">Detalle de operaciones de mostrador.</p>
+                                </div>
+                                <button onclick="showToast('Descargando Cierre_Ventas_Hoy.xlsx...')" class="btn-corporate text-white text-xs font-semibold px-4 py-2 rounded-lg">
+                                    <i class="fa-solid fa-download mr-1"></i> Descargar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            else if (section === 'configuracion') {
+                title.textContent = 'Configuración del Sistema';
+                container.innerHTML = `
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 max-w-xl">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">Parámetros Generales</h3>
+                        <form onsubmit="event.preventDefault(); showToast('Configuración guardada con éxito.');" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Nombre Comercial</label>
+                                <input type="text" value="Don Humberto Materiales S.A." class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Alerta de Stock Mínimo Global</label>
+                                <input type="number" value="20" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            </div>
+                            <button type="submit" class="btn-corporate text-white text-sm font-semibold px-5 py-2.5 rounded-lg">Guardar Cambios</button>
+                        </form>
+                    </div>
+                `;
+            }
+        }
+
+        // ==========================================
+        // D. NAVEGACIÓN Y VISTAS DEL EMPLEADO
+        // ==========================================
+        function switchEmployeeSection(section, btnElement) {
+            document.querySelectorAll('.emp-nav-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-900/70', 'text-white', 'shadow-sm');
+                btn.classList.add('text-blue-200');
+            });
+            if (btnElement) {
+                btnElement.classList.add('bg-blue-900/70', 'text-white', 'shadow-sm');
+                btnElement.classList.remove('text-blue-200');
+            }
+            if (window.innerWidth < 768) {
+                document.getElementById('employee-sidebar-menu').classList.add('hidden');
+            }
+            renderEmployeeSection(section);
+        }
+
+        function renderEmployeeSection(section) {
+            const container = document.getElementById('employee-main-content');
+            const title = document.getElementById('emp-page-title');
+
+            if (section === 'dashboard') {
+                title.textContent = 'Panel de Operaciones';
+                container.innerHTML = `
+                    <div class="mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                        <h2 class="text-2xl font-bold text-gray-800">Gestión de Pedidos y Mostrador</h2>
+                        <button onclick="openNewOrderModal('employee')" class="btn-corporate text-white text-sm px-4 py-2.5 rounded-lg font-medium shadow self-start sm:self-auto">
+                            <i class="fa-solid fa-plus mr-1"></i> Nuevo Pedido
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <span class="text-sm font-medium text-gray-500">Pedidos en Sistema</span>
+                            <p class="text-3xl font-bold text-gray-900 mt-1">${orders.length}</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <span class="text-sm font-medium text-gray-500">En Preparación / Retiro</span>
+                            <p class="text-3xl font-bold text-gray-900 mt-1">${orders.filter(o => o.status !== 'Entregado').length}</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <span class="text-sm font-medium text-gray-500">Turno Actual</span>
+                            <p class="text-xl font-bold text-blue-600 mt-1">Mañana (08:00 - 16:00)</p>
+                        </div>
+                    </div>
+
+                    ${renderOrdersTableHTML('employee')}
+                `;
+            } 
+            else if (section === 'stock') {
+                title.textContent = 'Consulta de Stock en Depósito';
+                container.innerHTML = renderStockTableHTML(false);
+            }
+            else if (section === 'ventas') {
+                title.textContent = 'Ventas y Pedidos de Mostrador';
+                container.innerHTML = renderOrdersTableHTML('employee');
+            }
+            else if (section === 'logistica') {
+                title.textContent = 'Despachos y Retiros en Playa';
+                container.innerHTML = renderOrdersTableHTML('employee');
+            }
+        }
+
+        // ==========================================
+        // E. TABLAS COMPARTIDAS (STOCK Y PEDIDOS)
+        // ==========================================
+        function renderStockTableHTML(isAdmin) {
+            return `
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="p-6 border-b border-gray-200 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800">Inventario de Materiales</h3>
+                            <p class="text-xs text-gray-500">Los cambios realizados aquí se reflejan automáticamente en el portal de clientes.</p>
+                        </div>
+                        ${isAdmin ? `
+                            <button onclick="openNewProductModal()" class="btn-corporate text-white text-sm px-4 py-2 rounded-lg font-medium shadow">
+                                <i class="fa-solid fa-plus mr-1"></i> Nuevo Material
+                            </button>
+                        ` : ''}
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-gray-600">
+                            <thead class="bg-gray-50 uppercase text-xs font-semibold text-gray-700">
+                                <tr>
+                                    <th class="px-6 py-3">Código</th>
+                                    <th class="px-6 py-3">Material</th>
+                                    <th class="px-6 py-3">Categoría</th>
+                                    <th class="px-6 py-3">Precio Unit.</th>
+                                    <th class="px-6 py-3">Stock Actual</th>
+                                    <th class="px-6 py-3">Estado</th>
+                                    ${isAdmin ? '<th class="px-6 py-3">Acciones</th>' : ''}
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                ${products.map((p, idx) => {
+                                    const isLow = p.stock < p.minStock;
+                                    return `
+                                    <tr>
+                                        <td class="px-6 py-4 font-bold text-gray-900">${p.id}</td>
+                                        <td class="px-6 py-4 font-medium text-gray-800">${p.name}</td>
+                                        <td class="px-6 py-4">${p.category}</td>
+                                        <td class="px-6 py-4 font-semibold">$${p.price.toLocaleString('es-AR')}</td>
+                                        <td class="px-6 py-4 font-bold">${p.stock} ${p.unit}s</td>
+                                        <td class="px-6 py-4">
+                                            ${isLow 
+                                                ? '<span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-semibold">Stock Bajo</span>' 
+                                                : '<span class="bg-green-100 text-green-800 text-xs px-2.5 py-1 rounded-full font-semibold">Óptimo</span>'}
+                                        </td>
+                                        ${isAdmin ? `
+                                        <td class="px-6 py-4 space-x-2">
+                                            <button onclick="openEditStockModal(${idx})" class="text-blue-600 hover:underline font-medium">Editar</button>
+                                        </td>` : ''}
+                                    </tr>
+                                `}).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderOrdersTableHTML(role) {
+            return `
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="p-6 border-b border-gray-200 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+                        <h3 class="text-lg font-bold text-gray-800">Listado de Pedidos</h3>
+                        <button onclick="openNewOrderModal('${role}')" class="btn-corporate text-white text-xs font-semibold px-3.5 py-2 rounded-lg">
+                            <i class="fa-solid fa-plus mr-1"></i> Registrar Venta / Pedido
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-gray-600">
+                            <thead class="bg-gray-50 uppercase text-xs font-semibold text-gray-700">
+                                <tr>
+                                    <th class="px-6 py-3">Nº Pedido</th>
+                                    <th class="px-6 py-3">Cliente</th>
+                                    <th class="px-6 py-3">Materiales</th>
+                                    <th class="px-6 py-3">Total</th>
+                                    <th class="px-6 py-3">Estado</th>
+                                    <th class="px-6 py-3">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                ${orders.map((o, idx) => {
+                                    let badgeClass = 'bg-amber-100 text-amber-800';
+                                    if (o.status === 'Listo para Retiro') badgeClass = 'bg-blue-100 text-blue-800';
+                                    if (o.status === 'Entregado') badgeClass = 'bg-green-100 text-green-800';
+                                    return `
+                                    <tr>
+                                        <td class="px-6 py-4 font-bold text-gray-900">${o.id}</td>
+                                        <td class="px-6 py-4">${o.client}</td>
+                                        <td class="px-6 py-4">${o.items}</td>
+                                        <td class="px-6 py-4 font-semibold">$${o.total.toLocaleString('es-AR')}</td>
+                                        <td class="px-6 py-4"><span class="${badgeClass} text-xs px-2.5 py-1 rounded-full font-medium">${o.status}</span></td>
+                                        <td class="px-6 py-4 space-x-3">
+                                            <button onclick="viewOrderDetail(${idx})" class="text-blue-600 hover:underline font-medium">Ver detalle</button>
+                                            ${o.status !== 'Entregado' ? `<button onclick="advanceOrderStatus(${idx}, '${role}')" class="text-emerald-600 hover:underline font-medium">Avanzar estado</button>` : ''}
+                                        </td>
+                                    </tr>
+                                `}).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ==========================================
+        // F. CATÁLOGO VISUAL DEL CLIENTE (SIN CARRITO)
+        // ==========================================
+        function setClientCategory(category, btn) {
+            currentClientCategory = category;
+            document.querySelectorAll('.cat-btn').forEach(b => {
+                b.classList.remove('bg-corporate', 'text-white', 'font-bold');
+                b.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-200', 'font-semibold');
+            });
+            btn.classList.add('bg-corporate', 'text-white', 'font-bold');
+            btn.classList.remove('bg-white', 'text-gray-700', 'border', 'border-gray-200', 'font-semibold');
+            renderClientCatalog();
+        }
+
+        function renderClientCatalog() {
+            const grid = document.getElementById('client-products-grid');
+            const searchTerm = (document.getElementById('client-search-input')?.value || '').toLowerCase();
+
+            const filtered = products.filter(p => {
+                const matchCat = currentClientCategory === 'Todos' || p.category === currentClientCategory;
+                const matchText = p.name.toLowerCase().includes(searchTerm) || p.description.toLowerCase().includes(searchTerm);
+                return matchCat && matchText;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12 bg-white rounded-2xl border border-gray-200">
+                        <i class="fa-solid fa-magnifying-glass text-3xl text-gray-300 mb-3"></i>
+                        <p class="text-gray-600 font-medium">No encontramos materiales que coincidan con tu búsqueda.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map((p, idx) => `
+                <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 overflow-hidden flex flex-col justify-between transition duration-300 group">
+                    <div>
+                        <div class="relative h-52 overflow-hidden bg-gray-100">
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <span class="absolute top-3 left-3 bg-corporate/90 backdrop-blur-xs text-white text-xs font-bold px-3 py-1 rounded-full">
+                                ${p.category}
+                            </span>
+                            <span class="absolute top-3 right-3 ${p.stock > 0 ? 'bg-emerald-500 text-white' : 'bg-red-500 text-white'} text-xs font-bold px-2.5 py-1 rounded-full shadow">
+                                ${p.stock > 0 ? 'Disponible' : 'Sin Stock'}
+                            </span>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-lg font-extrabold text-gray-900 mb-1.5 group-hover:text-blue-800 transition">${p.name}</h4>
+                            <p class="text-sm text-gray-500 mb-5 line-clamp-2">${p.description}</p>
+                            <div class="flex items-baseline justify-between pt-3 border-t border-gray-100">
+                                <div>
+                                    <span class="text-xs text-gray-400 block">Precio referencia</span>
+                                    <span class="text-2xl font-extrabold text-corporate">$${p.price.toLocaleString('es-AR')}</span>
+                                    <span class="text-xs text-gray-500">/ ${p.unit}</span>
+                                </div>
+                                <span class="text-xs font-semibold text-gray-500 bg-gray-100 px-2.5 py-1 rounded-lg">
+                                    ${p.stock} ${p.unit}s en salón
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <button onclick="openProductConsultModal('${p.id}')" class="w-full btn-corporate text-white py-3 rounded-xl text-sm font-bold shadow-sm hover:shadow flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                            <span>Consultar Disponibilidad</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ==========================================
+        // G. MODALES INTERACTIVOS Y ACCIONES
+        // ==========================================
+        function openModal(title, bodyHTML) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-body').innerHTML = bodyHTML;
+            document.getElementById('app-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('app-modal').classList.add('hidden');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast-notification');
+            document.getElementById('toast-message').textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3200);
+        }
+
+        // Modal: Detalle de Pedido
+        function viewOrderDetail(idx) {
+            const o = orders[idx];
+            openModal(`Detalle del Pedido ${o.id}`, `
+                <div class="space-y-3 text-sm">
+                    <div class="flex justify-between py-2 border-b"><span class="text-gray-500">Cliente:</span><span class="font-bold text-gray-900">${o.client}</span></div>
+                    <div class="flex justify-between py-2 border-b"><span class="text-gray-500">Fecha/Hora:</span><span class="font-medium">${o.date}</span></div>
+                    <div class="flex justify-between py-2 border-b"><span class="text-gray-500">Estado Actual:</span><span class="font-bold text-blue-700">${o.status}</span></div>
+                    <div class="py-2 border-b">
+                        <span class="text-gray-500 block mb-1">Detalle de Materiales:</span>
+                        <p class="bg-gray-50 p-3 rounded-lg font-medium text-gray-800">${o.items}</p>
+                    </div>
+                    <div class="flex justify-between pt-2 text-base">
+                        <span class="font-bold text-gray-700">Monto Total:</span>
+                        <span class="font-extrabold text-corporate text-lg">$${o.total.toLocaleString('es-AR')}</span>
+                    </div>
+                </div>
+            `);
+        }
+
+        // Avanzar estado de pedido
+        function advanceOrderStatus(idx, role) {
+            const current = orders[idx].status;
+            if (current === 'En Preparación') orders[idx].status = 'Listo para Retiro';
+            else if (current === 'Listo para Retiro') orders[idx].status = 'Entregado';
+            
+            showToast(`Pedido ${orders[idx].id} actualizado a "${orders[idx].status}"`);
+            if (role === 'admin') renderAdminSection('ventas');
+            else renderEmployeeSection('dashboard');
+        }
+
+        // Modal: Nuevo Pedido (Admin / Empleado)
+        function openNewOrderModal(role) {
+            openModal('Registrar Nuevo Pedido', `
+                <form onsubmit="submitNewOrder(event, '${role}')" class="space-y-4 text-sm">
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1">Nombre del Cliente o Empresa</label>
+                        <input type="text" id="new-order-client" required placeholder="Ej. Constructora Norte S.A." class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1">Materiales Solicitados</label>
+                        <input type="text" id="new-order-items" required placeholder="Ej. Cemento x30 bolsas, Arena x3 m³" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1">Importe Total ($)</label>
+                        <input type="number" id="new-order-total" required min="100" placeholder="Ej. 342000" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                    </div>
+                    <div class="flex justify-end space-x-2 pt-2">
+                        <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-100 rounded-lg font-medium">Cancelar</button>
+                        <button type="submit" class="btn-corporate text-white px-4 py-2 rounded-lg font-semibold">Guardar Pedido</button>
+                    </div>
+                </form>
+            `);
+        }
+
+        function submitNewOrder(e, role) {
+            e.preventDefault();
+            const client = document.getElementById('new-order-client').value;
+            const items = document.getElementById('new-order-items').value;
+            const total = Number(document.getElementById('new-order-total').value);
+            const newId = '#PED-' + (9822 + orders.length);
+
+            orders.unshift({
+                id: newId,
+                client,
+                items,
+                total,
+                status: 'En Preparación',
+                date: 'Recién'
+            });
+
+            closeModal();
+            showToast(`Pedido ${newId} creado correctamente.`);
+            if (role === 'admin') renderAdminSection('ventas');
+            else renderEmployeeSection('dashboard');
+        }
+
+        // Modal: Editar Stock (Admin)
+        function openEditStockModal(idx) {
+            const p = products[idx];
+            openModal(`Editar Stock: ${p.name}`, `
+                <form onsubmit="submitEditStock(event, ${idx})" class="space-y-4 text-sm">
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1">Cantidad en Stock (${p.unit}s)</label>
+                        <input type="number" id="edit-stock-qty" value="${p.stock}" min="0" required class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1">Precio Unitario ($)</label>
+                        <input type="number" id="edit-stock-price" value="${p.price}" min="1" required class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                    </div>
+                    <div class="flex justify-end space-x-2 pt-2">
+                        <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-100 rounded-lg font-medium">Cancelar</button>
+                        <button type="submit" class="btn-corporate text-white px-4 py-2 rounded-lg font-semibold">Actualizar</button>
+                    </div>
+                </form>
+            `);
+        }
+
+        function submitEditStock(e, idx) {
+            e.preventDefault();
+            products[idx].stock = Number(document.getElementById('edit-stock-qty').value);
+            products[idx].price = Number(document.getElementById('edit-stock-price').value);
+            closeModal();
+            showToast('Inventario y precios actualizados.');
+            renderAdminSection('stock');
+        }
+
+        // Modal: Agregar Nuevo Material (Admin)
+        function openNewProductModal() {
+            openModal('Agregar Nuevo Material al Catálogo', `
+                <form onsubmit="submitNewProduct(event)" class="space-y-3 text-sm">
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1">Nombre del Material</label>
+                        <input type="text" id="prod-name" required placeholder="Ej. Cal Hidráulica Cacique 25kg" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block font-semibold text-gray-700 mb-1">Categoría</label>
+                            <select id="prod-cat" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                                <option>Obra Gruesa</option>
+                                <option>Hierros</option>
+                                <option>Áridos</option>
+                                <option>Terminaciones</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-700 mb-1">Unidad</label>
+                            <input type="text" id="prod-unit" required value="bolsa" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block font-semibold text-gray-700 mb-1">Precio ($)</label>
+                            <input type="number" id="prod-price" required min="1" placeholder="6500" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-700 mb-1">Stock Inicial</label>
+                            <input type="number" id="prod-stock" required min="0" placeholder="120" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1">Descripción breve</label>
+                        <input type="text" id="prod-desc" required placeholder="Ideal para mezclas de asiento y revoques." class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                    </div>
+                    <div class="flex justify-end space-x-2 pt-2">
+                        <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-100 rounded-lg font-medium">Cancelar</button>
+                        <button type="submit" class="btn-corporate text-white px-4 py-2 rounded-lg font-semibold">Publicar Material</button>
+                    </div>
+                </form>
+            `);
+        }
+
+        function submitNewProduct(e) {
+            e.preventDefault();
+            const newProd = {
+                id: 'MAT-0' + (products.length + 1),
+                name: document.getElementById('prod-name').value,
+                category: document.getElementById('prod-cat').value,
+                unit: document.getElementById('prod-unit').value,
+                price: Number(document.getElementById('prod-price').value),
+                stock: Number(document.getElementById('prod-stock').value),
+                minStock: 25,
+                description: document.getElementById('prod-desc').value,
+                image: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=800&q=80'
+            };
+            products.push(newProd);
+            closeModal();
+            showToast('Material agregado al inventario y al catálogo.');
+            renderAdminSection('stock');
+        }
+
+        // Modales del Portal Cliente
+        function openProductConsultModal(prodId) {
+            const p = products.find(item => item.id === prodId);
+            openModal('Consulta de Disponibilidad y Presupuesto', `
+                <div class="space-y-4 text-sm">
+                    <div class="flex items-center space-x-4 bg-blue-50 p-3.5 rounded-xl border border-blue-100">
+                        <img src="${p.image}" class="w-16 h-16 rounded-lg object-cover">
+                        <div>
+                            <h4 class="font-bold text-gray-900">${p.name}</h4>
+                            <p class="text-corporate font-extrabold text-base">$${p.price.toLocaleString('es-AR')} <span class="text-xs font-normal text-gray-500">/ ${p.unit}</span></p>
+                            <span class="text-xs text-emerald-700 font-semibold">Stock inmediato: ${p.stock} ${p.unit}s</span>
+                        </div>
+                    </div>
+                    <form onsubmit="event.preventDefault(); closeModal(); showToast('¡Consulta enviada! Un asesor te responderá a la brevedad.');" class="space-y-3">
+                        <div>
+                            <label class="block font-semibold text-gray-700 mb-1">Cantidad estimada (${p.unit}s)</label>
+                            <input type="number" min="1" value="10" required class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-700 mb-1">Teléfono o WhatsApp de contacto</label>
+                            <input type="text" required placeholder="Ej. 351 612-3456" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        </div>
+                        <button type="submit" class="w-full btn-corporate text-white font-bold py-2.5 rounded-xl shadow">
+                            Solicitar Cotización Formal
+                        </button>
+                    </form>
+                </div>
+            `);
+        }
+
+        function openContactModal() {
+            openModal('Asesoramiento Técnico en Obra', `
+                <div class="space-y-3 text-sm text-gray-600">
+                    <p>Nuestro equipo técnico te ayuda a calcular la cantidad exacta de materiales para tu proyecto.</p>
+                    <div class="bg-gray-50 p-4 rounded-xl space-y-2 border border-gray-200">
+                        <p><i class="fa-solid fa-location-dot text-corporate w-5"></i> <strong>Sucursal Central:</strong> Av. Principal 1450, Parque Industrial</p>
+                        <p><i class="fa-solid fa-clock text-corporate w-5"></i> <strong>Horarios:</strong> Lunes a Viernes de 08:00 a 18:00 hs • Sábados de 08:30 a 13:00 hs</p>
+                        <p><i class="fa-brands fa-whatsapp text-emerald-600 w-5"></i> <strong>WhatsApp Ventas:</strong> +54 9 351 555-8900</p>
+                    </div>
+                </div>
+            `);
+        }
+    </script>
+</body>
+</html>
